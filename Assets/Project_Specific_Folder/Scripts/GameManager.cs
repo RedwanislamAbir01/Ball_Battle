@@ -6,17 +6,17 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
 
-
+    public GameObject Gate;
 
     public bool IsStarted;
     public int MatchNo = 0;
     public float Time;
-
+    public GameObject Parent;
     public GameObject Ball;
     [Header("Fields")]
     public GameObject AttackerField;
     public GameObject DefenderField;
-
+    public GameObject BallContainer;
     [Header("Game Parameters")]
     public float TimeLimit = 140f;
     UiManager _UiInstance;
@@ -55,10 +55,10 @@ public class GameManager : Singleton<GameManager>
         
         Vector3 RndPointonPlane = leftTop + XAxis * Random.value + ZAxis * Random.value;
         GameObject g = Instantiate(Ball);
-
+        Ball = g;
         g.transform.position = RndPointonPlane;
 
-        g.transform.parent = AttackerField.transform.root;
+        g.transform.parent = Parent.transform;
     }
 
 }
