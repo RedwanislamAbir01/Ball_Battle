@@ -5,12 +5,14 @@ using Singleton;
 using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
+    public float EnemyEnergy = 0;
+    public float PlayerEnergy = 0;
 
     public GameObject Gate;
 
     public bool IsStarted;
     public int MatchNo = 0;
-    public float Time;
+    public float Timer;
     public GameObject Parent;
     public GameObject Ball;
     [Header("Fields")]
@@ -19,18 +21,68 @@ public class GameManager : Singleton<GameManager>
     public GameObject BallContainer;
     [Header("Game Parameters")]
     public float TimeLimit = 140f;
-    UiManager _UiInstance;
 
+
+    UiManager _UiInstance;
+     List<EnergyBar> m_enemyEnergy = new List<EnergyBar>();
+     List<EnergyBar> m_playerEnergy = new List<EnergyBar>();
     public override void Start()
     {
 
-        base.Start();
+        base.Start(); 
+        FillEnergy(m_enemyEnergy, 0);
+        FillEnergy(m_playerEnergy, 0);
         _UiInstance = UiManager.Instance ;
   
 
 
     }
+    private void Update()
+    {
+        if (IsStarted)
+        {
+            if (EnemyEnergy < 6)
+            {
+                EnemyEnergy += 1 * Time.deltaTime;
+                FillEnergy(m_enemyEnergy, EnemyEnergy);
+            }
+            if (PlayerEnergy < 6)
+            {
+                PlayerEnergy += 1 * Time.deltaTime;
+                FillEnergy(m_playerEnergy, PlayerEnergy);
+            }
+        }
+    }
+    public void FillEnergy(List<EnergyBar> energyPoints, float value)
+    {
 
+        int integerPart = (int)(value);
+        float fractionalPart = value - integerPart;
+        for (int i = 0; i < integerPart; i++)
+        {
+            EnergyBar energyPoint = energyPoints[i];
+            energyPoint.IncreaseValue(1);
+        }
+        if (integerPart >= energyPoints.Count) return;
+        for (int i = integerPart; i < energyPoints.Count; i++)
+        {
+            EnergyBar energyPoint = energyPoints[i];
+            energyPoint.IncreaseValue(0);
+        }
+        energyPoints[integerPart].IncreaseValue(fractionalPart);
+    }
+    public void AddEnergy(bool isEnemy, EnergyBar energyPoint)
+    {
+        // used by GameUICtrl to add energy
+        if (isEnemy)
+        {
+            m_enemyEnergy.Add(energyPoint);
+        }
+        else
+        {
+           m_playerEnergy.Add(energyPoint);
+        }
+    }
     public void StartMatch()
     {
         IsStarted = true;

@@ -39,15 +39,26 @@ public class TapSpwaner : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
+
+
             if (hit.transform.tag == "AttackerLand")
             {
-                GameObject m_attacker = Instantiate(Attacker,hit.point, Quaternion.identity,_GmInstance.Parent.transform);
-                m_attacker.GetComponent<Attacker>().Ball = _GmInstance.Ball;
+                if (_GmInstance.PlayerEnergy > 2)
+                {
+                    _GmInstance.PlayerEnergy -= 2;
+                    GameObject m_attacker = Instantiate(Attacker, hit.point, Quaternion.identity, _GmInstance.Parent.transform);
+                    m_attacker.GetComponent<Attacker>().Ball = _GmInstance.Ball;
 
+                }
             }
+
             else
             {
-                GameObject m_defender = Instantiate(Defender, hit.point, Quaternion.identity, _GmInstance.Parent.transform);
+                if (_GmInstance.EnemyEnergy > 3)
+                {
+                    _GmInstance.EnemyEnergy -= 3;
+                    GameObject m_defender = Instantiate(Defender, hit.point, Quaternion.identity, _GmInstance.Parent.transform);
+                }
             }
         }
 
