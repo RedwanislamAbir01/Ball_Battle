@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Attacker: {fileID: 3594723633847192564, guid: 429e3836f4b3e0f4da83cc05c0b5c28c, type: 3}
-  Defender: {fileID: 0}
+  Defender: {fileID: 9131844715935581543, guid: 1d93bfd794b5cf849a643531a7312d3a, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

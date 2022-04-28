@@ -26,7 +26,9 @@ public class GameManager : Singleton<GameManager>
 
         base.Start();
         _UiInstance = UiManager.Instance ;
-        
+  
+
+
     }
 
     public void StartMatch()

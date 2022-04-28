@@ -7,6 +7,7 @@ TagManager:
   - AttackerLand
   - DefenderrLand
   - Ball
+  - Attacker
   layers:
   - Default
   - TransparentFX

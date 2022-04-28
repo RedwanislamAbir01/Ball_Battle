@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attacker : MonoBehaviour
+public class Attacker : MonoBehaviour, ISoldier
 {
 
     public GameObject Ball;
     public Transform Holder;
+    int i;
+    public int SpwanEnergyPoint
+    {
+        get => i;
+        set => i = value;
+    }
 
     GameManager _GmInstance;
     void Start()
@@ -16,6 +22,10 @@ public class Attacker : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        Activated();
+    }
+  public void Activated()
     {
         if (_GmInstance.BallContainer == null)
         {
@@ -37,5 +47,9 @@ public class Attacker : MonoBehaviour
 
             transform.position = Vector3.MoveTowards(transform.position, _GmInstance.Gate.transform.position, 2 * Time.deltaTime);
         }
+    }
+ public void InActivated()
+    {
+
     }
 }
