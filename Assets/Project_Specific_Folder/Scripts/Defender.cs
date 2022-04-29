@@ -17,6 +17,7 @@ public class Defender : MonoBehaviour, ISoldier
     void Start()
     {
         _GmInstance = GameManager.Instance;
+        _GmInstance.SetColor(true, transform.GetChild(0).transform.GetComponent<MeshRenderer>(), _GmInstance.EnemyColor);
     }
     private void Update()
     {

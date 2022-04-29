@@ -5,6 +5,9 @@ using Singleton;
 using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
+    [Header("Colors")]
+    public Color PlayerColor;
+    public Color EnemyColor;
     public float EnemyEnergy = 0;
     public float PlayerEnergy = 0;
 
@@ -37,6 +40,17 @@ public class GameManager : Singleton<GameManager>
 
 
     }
+   public void SetColor(bool IsEnemy ,MeshRenderer m, Color c)
+    {
+        if (IsEnemy)
+        {
+            m.material.color = c;
+        }
+        else
+        {
+            m.material.color = c;
+        }
+    }
     private void Update()
     {
         if (IsStarted)
@@ -45,6 +59,7 @@ public class GameManager : Singleton<GameManager>
             {
                 EnemyEnergy += 1 * Time.deltaTime;
                 FillEnergy(m_enemyEnergy, EnemyEnergy);
+
             }
             if (PlayerEnergy < 6)
             {

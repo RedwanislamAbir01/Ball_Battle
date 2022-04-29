@@ -13,7 +13,7 @@ public class UiManager : Singleton<UiManager>
     public GameObject InGmePanel;
     public GameObject EnemyEnergBar;
     public GameObject PlayerEnergyBar;
-    public GameObject EnergyBar;
+    public GameObject EnergyBarPrefab;
 
     public TextMeshProUGUI TimerText;
     [Header("Btns")]
@@ -42,11 +42,18 @@ public class UiManager : Singleton<UiManager>
     {
         for (int i = 0; i < 6; i++)
         {
-            GameObject PBar = Instantiate(EnergyBar, PlayerEnergyBar.transform);
-            _GmInstance.AddEnergy(false, PBar.GetComponent<EnergyBar>());
 
-            GameObject EBar = Instantiate(EnergyBar, EnemyEnergBar.transform);
-            _GmInstance.AddEnergy(true, EBar.GetComponent<EnergyBar>());
+            GameObject PBar = Instantiate(EnergyBarPrefab, PlayerEnergyBar.transform);
+            EnergyBar E = PBar.GetComponent<EnergyBar>();
+            E.SetColor(false);
+            _GmInstance.AddEnergy(false, E);
+
+
+            GameObject EBar = Instantiate(EnergyBarPrefab, EnemyEnergBar.transform);
+            EnergyBar P = EBar.GetComponent<EnergyBar>();
+            P.SetColor(true);
+            _GmInstance.AddEnergy(true, P);
+
         }
     }
 

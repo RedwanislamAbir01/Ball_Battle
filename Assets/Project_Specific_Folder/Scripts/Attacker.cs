@@ -18,6 +18,7 @@ public class Attacker : MonoBehaviour, ISoldier
     void Start()
     {
         _GmInstance = GameManager.Instance;
+        _GmInstance.SetColor(false, transform.GetChild(0).transform.GetComponent<MeshRenderer>() , _GmInstance.PlayerColor);
     }
 
     // Update is called once per frame
