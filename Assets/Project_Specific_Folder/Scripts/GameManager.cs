@@ -24,11 +24,15 @@ public class GameManager : Singleton<GameManager>
     public GameObject BallContainer;
     [Header("Game Parameters")]
     public float TimeLimit = 140f;
+    public bool BallHolding;
 
 
+    public List<Attacker> PAttacker = new List<Attacker>();
     UiManager _UiInstance;
      List<EnergyBar> m_enemyEnergy = new List<EnergyBar>();
      List<EnergyBar> m_playerEnergy = new List<EnergyBar>();
+
+    public bool GameOver;
     public override void Start()
     {
 

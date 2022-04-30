@@ -8,7 +8,10 @@ public interface ISoldier
         get;
         set;
     }
-    
-   void Activated();
+    bool IsAttacking { get; set; }
+ 
+
+
+    void Activated();
    void InActivated();
 }

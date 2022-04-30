@@ -12,6 +12,13 @@ public class Defender : MonoBehaviour, ISoldier
         get => i;
         set => i = value;
     }
+   public bool IsAttacking
+    {
+        get => AttackState;
+        set => AttackState = value;
+    }
+
+    bool AttackState = true;
 
     GameManager _GmInstance;
     void Start()

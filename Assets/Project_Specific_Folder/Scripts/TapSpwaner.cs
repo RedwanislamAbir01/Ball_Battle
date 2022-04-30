@@ -48,7 +48,7 @@ public class TapSpwaner : MonoBehaviour
                     _GmInstance.PlayerEnergy -= 2;
                     GameObject m_attacker = Instantiate(Attacker, hit.point, Quaternion.identity, _GmInstance.Parent.transform);
                     m_attacker.GetComponent<Attacker>().Ball = _GmInstance.Ball;
-
+                    _GmInstance.PAttacker.Add(m_attacker.GetComponent<Attacker>());
                 }
             }
 

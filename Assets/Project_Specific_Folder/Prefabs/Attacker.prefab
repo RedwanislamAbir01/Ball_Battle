@@ -41,10 +41,9 @@ GameObject:
   - component: {fileID: 3594723633559523620}
   - component: {fileID: 3594723633559523627}
   - component: {fileID: 3594723633559523626}
-  - component: {fileID: 3594723633559523625}
   m_Layer: 0
   m_Name: Cylinder
-  m_TagString: Attacker
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,20 +111,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3594723633559523625
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3594723633559523624}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &3594723633847192564
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,9 +121,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3594723633847192565}
   - component: {fileID: 2823751216030835135}
+  - component: {fileID: 8218021118702711116}
   m_Layer: 0
   m_Name: Attacker
-  m_TagString: Untagged
+  m_TagString: Attacker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -174,6 +160,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Ball: {fileID: 0}
   Holder: {fileID: 5778841379869014361}
+  HighLighter: {fileID: 0}
+--- !u!136 &8218021118702711116
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3594723633847192564}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &4569796778730191915
 GameObject:
   m_ObjectHideFlags: 0
