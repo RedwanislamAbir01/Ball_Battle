@@ -55,21 +55,21 @@ public class Attacker : MonoBehaviour, ISoldier
     {
         if (IsActive)
         {
-            if (_GmInstance.BallContainer == null && !_GmInstance.GameOver)
+            if (_GmInstance.BallContainer == null)
             {
 
                 transform.position = Vector3.MoveTowards(transform.position, Ball.transform.position, 2 * Time.deltaTime);
               
                 if (Vector3.Distance(transform.position, Ball.transform.position) <= 0.1f)
                 {
-                    
-                    _GmInstance.BallContainer = this.gameObject;
+
+                    _GmInstance.BallContainer = GetComponent<Attacker>();
                     Ball.transform.position = Holder.transform.position;
                     Ball.transform.parent = this.transform;
                     HighLighter.SetActive(true);
                 }
             }
-            else if ((_GmInstance.BallContainer != null) && !_GmInstance.GameOver)  // Running with ball 
+            else if ((_GmInstance.BallContainer == GetComponent<Attacker>()))  // Running with ball 
 
             {
                
@@ -89,8 +89,10 @@ public class Attacker : MonoBehaviour, ISoldier
                     Vector3 targetDir = closest.transform.position - transform.position;
                     Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDir, 360, 0f);
                     transform.rotation = Quaternion.LookRotation(newDirection);
-                    IsActive = false;
+
+                  
                     _GmInstance.BallContainer = null;
+                    IsActive = false;
                     Ball.transform.parent = null;            
                     Ball.GetComponent<Ball>().GoTo = closest;
                     StartCoroutine(Reactivate());
@@ -100,10 +102,21 @@ public class Attacker : MonoBehaviour, ISoldier
                 {
                     Vector3 targetDirection = _GmInstance.Gate.transform.position - transform.position;
                     Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 360, 0f);
-                    transform.rotation = Quaternion.LookRotation(Vector3.forward);
-                    transform.position = Vector3.forward * 2 * Time.deltaTime;
+                    transform.rotation = Quaternion.LookRotation(newDirection);
+                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(_GmInstance.Gate.transform.position.x, 0, _GmInstance.Gate.transform.position.z), 2 * Time.deltaTime);
                 }
 
+            }
+            else
+            {
+                print("free");
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, _GmInstance.Gate.transform.position.y, _GmInstance.Gate.transform.position.z), 1 * Time.deltaTime);
+                if(transform.position.z  == _GmInstance.Gate.transform.position.z)
+
+                {
+                    Destroy(gameObject, 1.2f);
+                }
+            
             }
         }
     }

@@ -21,7 +21,7 @@ public class GameManager : Singleton<GameManager>
     [Header("Fields")]
     public GameObject AttackerField;
     public GameObject DefenderField;
-    public GameObject BallContainer;
+    public Attacker BallContainer;
     [Header("Game Parameters")]
     public float TimeLimit = 140f;
     public bool BallHolding;
