@@ -49,15 +49,17 @@ public class TapSpwaner : MonoBehaviour
                     GameObject m_attacker = Instantiate(Attacker, hit.point, Quaternion.identity, _GmInstance.Parent.transform);
                     m_attacker.GetComponent<Attacker>().Ball = _GmInstance.Ball;
                     _GmInstance.PAttacker.Add(m_attacker.GetComponent<Attacker>());
+              
                 }
             }
 
-            else
+            else if (hit.transform.tag == "DefenderrLand")
             {
                 if (_GmInstance.EnemyEnergy > 3)
                 {
                     _GmInstance.EnemyEnergy -= 3;
                     GameObject m_defender = Instantiate(Defender, hit.point, Quaternion.identity, _GmInstance.Parent.transform);
+                    
                 }
             }
         }

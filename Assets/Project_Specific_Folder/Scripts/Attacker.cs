@@ -27,12 +27,13 @@ public class Attacker : MonoBehaviour, ISoldier
     GameManager _GmInstance;
 
     public bool IsCaught;
-    bool IsActive;
+    public bool IsActive;
     void Start()
     {
         _GmInstance = GameManager.Instance;
         _GmInstance.SetColor(false, transform.GetChild(0).transform.GetComponent<MeshRenderer>() , _GmInstance.PlayerColor);
         _GmInstance.BallHolding = false;
+        IsActive = true;
     }
 
     // Update is called once per frame
@@ -40,53 +41,70 @@ public class Attacker : MonoBehaviour, ISoldier
     {
         Activated();
     }
+    IEnumerator Reactivate()
+    {
+        yield return new WaitForSeconds(2.5f);
+        IsActive = true;
+        if(!_GmInstance.GameOver)
+        {
+            IsCaught = false;
+
+        }
+    }
   public void Activated()
     {
-        if (_GmInstance.BallContainer == null)
+        if (IsActive)
         {
-            transform.position = Vector3.MoveTowards(transform.position, Ball.transform.position, 2 * Time.deltaTime);
-
-            if (Vector3.Distance(transform.position, Ball.transform.position) <= 1)
+            if (_GmInstance.BallContainer == null && !_GmInstance.GameOver)
             {
-                _GmInstance.BallContainer = this.gameObject;
-                Ball.transform.position = Holder.transform.position;
-                Ball.transform.parent = this.transform;
+
+                transform.position = Vector3.MoveTowards(transform.position, Ball.transform.position, 2 * Time.deltaTime);
               
+                if (Vector3.Distance(transform.position, Ball.transform.position) <= 0.1f)
+                {
+                    
+                    _GmInstance.BallContainer = this.gameObject;
+                    Ball.transform.position = Holder.transform.position;
+                    Ball.transform.parent = this.transform;
+                    HighLighter.SetActive(true);
+                }
             }
-        }
-        else if((_GmInstance.BallContainer != null))  // Running with ball 
+            else if ((_GmInstance.BallContainer != null) && !_GmInstance.GameOver)  // Running with ball 
 
-        {
-            //Vector3 targetDirection = _GmInstance.Gate.transform.position - transform.position;
-            //Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 360, 0f);
-            //transform.rotation = Quaternion.LookRotation(newDirection);
-            //transform.position = Vector3.MoveTowards(transform.position, _GmInstance.Gate.transform.position, 2 * Time.deltaTime);
-            
-            if(IsCaught)
             {
-                Attacker closest = GetNearestAttacker();
-                print(closest);
-                //if(closest == null)
-                //{
-                //    _GmInstance.GameOver = true ;
-                //    return;
-                //}
+               
 
-                Vector3 targetDir = closest.transform.position - transform.position;
-                Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDir, 360, 0f);
-                transform.rotation = Quaternion.LookRotation(newDirection);
-                _GmInstance.BallContainer = null;
-                Ball.transform.parent = null;
-                Ball.GetComponent<Ball>().GoTo = closest;
-            }
-            else
-            {
-                Vector3 targetDirection = _GmInstance.Gate.transform.position - transform.position;
-                Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 360, 0f);
-                transform.rotation = Quaternion.LookRotation(newDirection);
-                transform.position = Vector3.MoveTowards(transform.position, _GmInstance.Gate.transform.position, 2 * Time.deltaTime);
-            }
+                if (IsCaught)
+                {
+                    HighLighter.SetActive(false);
+                    Attacker closest = GetNearestAttacker();
+                    print(closest);
+                    if (closest == null)
+                    {
+                        _GmInstance.GameOver = true;
+                        IsActive = false;                        
+                        return;
+                    }
 
+                    Vector3 targetDir = closest.transform.position - transform.position;
+                    Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDir, 360, 0f);
+                    transform.rotation = Quaternion.LookRotation(newDirection);
+                    IsActive = false;
+                    _GmInstance.BallContainer = null;
+                    Ball.transform.parent = null;            
+                    Ball.GetComponent<Ball>().GoTo = closest;
+                    StartCoroutine(Reactivate());
+
+                }
+                else
+                {
+                    Vector3 targetDirection = _GmInstance.Gate.transform.position - transform.position;
+                    Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 360, 0f);
+                    transform.rotation = Quaternion.LookRotation(Vector3.forward);
+                    transform.position = Vector3.forward * 2 * Time.deltaTime;
+                }
+
+            }
         }
     }
  public void InActivated()
@@ -98,7 +116,7 @@ public class Attacker : MonoBehaviour, ISoldier
 
     Attacker GetNearestAttacker()
     {
-        float minDistance = 100;
+        float minDistance = float.PositiveInfinity;
         Attacker m_Attacker = null;
         foreach(Attacker atk in _GmInstance.PAttacker)
         {
@@ -114,11 +132,5 @@ public class Attacker : MonoBehaviour, ISoldier
         }
         return m_Attacker;
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.CompareTag("Enemy"))
-        {
-            IsCaught = true;
-        }
-    }
+
 }

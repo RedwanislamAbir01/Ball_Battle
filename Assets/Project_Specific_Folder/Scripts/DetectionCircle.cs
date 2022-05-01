@@ -13,7 +13,7 @@ public class DetectionCircle : MonoBehaviour
     // Update is called once per frame
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Attacker")
+        if (other.tag == "Attacker" && m_Defender.IsActive)
         {
             m_Defender.Target = other.gameObject;
 

@@ -160,7 +160,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Ball: {fileID: 0}
   Holder: {fileID: 5778841379869014361}
-  HighLighter: {fileID: 0}
+  HighLighter: {fileID: 4569796778730191915}
+  IsCaught: 0
+  IsActive: 0
 --- !u!136 &8218021118702711116
 CapsuleCollider:
   m_ObjectHideFlags: 0

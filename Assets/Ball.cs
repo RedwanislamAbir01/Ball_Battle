@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public float speed = 1;
+    public float speed = 35;
     public Attacker GoTo;
     // Start is called before the first frame update
     void Start()
