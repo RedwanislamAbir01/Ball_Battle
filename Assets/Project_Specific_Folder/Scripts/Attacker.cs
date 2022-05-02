@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class Attacker : MonoBehaviour, ISoldier
 {
-
+    public enum EType
+    {
+        Normal,
+        PenaltyTaker
+    }
+    public EType AttackerType;
     public GameObject Ball;
     public Transform Holder;
     public GameObject HighLighter;
@@ -30,6 +35,8 @@ public class Attacker : MonoBehaviour, ISoldier
     public bool IsActive;
     void Start()
     {
+        if (AttackerType == EType.PenaltyTaker)
+            return;
         _GmInstance = GameManager.Instance;
         _GmInstance.SetColor(false, transform.GetChild(0).transform.GetComponent<MeshRenderer>() , _GmInstance.PlayerColor);
         _GmInstance.BallHolding = false;
@@ -39,7 +46,9 @@ public class Attacker : MonoBehaviour, ISoldier
     // Update is called once per frame
     void Update()
     {
+        if (AttackerType == EType.Normal)            
         Activated();
+       
     }
     IEnumerator Reactivate()
     {
@@ -50,6 +59,10 @@ public class Attacker : MonoBehaviour, ISoldier
             IsCaught = false;
 
         }
+    }
+    public void MouseMovementControl()
+    {
+     
     }
   public void Activated()
     {
