@@ -9,6 +9,8 @@ TagManager:
   - Ball
   - Attacker
   - Enemy
+  - Fire
+  - Generated
   layers:
   - Default
   - TransparentFX
