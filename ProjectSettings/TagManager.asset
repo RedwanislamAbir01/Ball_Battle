@@ -12,6 +12,8 @@ TagManager:
   - Fire
   - Generated
   - Joystick
+  - PGate
+  - EGate
   layers:
   - Default
   - TransparentFX

@@ -4,6 +4,7 @@ using UnityEngine;
 using Singleton;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class UiManager : Singleton<UiManager>
 {
     [Header("UI Panels")]
@@ -15,26 +16,39 @@ public class UiManager : Singleton<UiManager>
     public GameObject PlayerEnergyBar;
     public GameObject EnergyBarPrefab;
 
+    public TextMeshProUGUI LevelNo;
     public TextMeshProUGUI TimerText;
+    public TextMeshProUGUI PlayerText;
+    public TextMeshProUGUI EnemyText;
+    public TextMeshProUGUI EnemyPoint;
+    public TextMeshProUGUI PlayerPoint;
     [Header("Btns")]
     public Button StartGameBtn;
-
+    public Button NextButton;
     GameManager _GmInstance;
 
     public override void Start()
     {
         base.Start();
- 
-        
 
-         StartGameBtn.onClick.AddListener(StartOnClick);
+        LevelNo.text = PlayerPrefs.GetInt("MatchNo").ToString();
+
+        StartGameBtn.onClick.AddListener(StartOnClick);
+        NextButton.onClick.AddListener(NextOnClick);
         _GmInstance = GameManager.Instance;
-    
+
+    }
+    private void NextOnClick()
+    {
+
+
+        _GmInstance.IncreaseMatchNo();
+        SceneManager.LoadScene(0);
     }
     private void StartOnClick()
     {
         _GmInstance.StartMatch();
-
+       
         GenerateEnergyBar();
     }
 
@@ -56,7 +70,19 @@ public class UiManager : Singleton<UiManager>
 
         }
     }
-
+    public void NameUpdate()
+    {
+        if (_GmInstance.Attacker.isAtk)
+        {
+            PlayerText.text = "Attacker"; 
+            EnemyText.text = "Defender";
+        }
+        else
+        {
+            PlayerText.text = "Defender";
+            EnemyText.text = "Attacker";
+        }
+    }
 
     private void Update()
     {

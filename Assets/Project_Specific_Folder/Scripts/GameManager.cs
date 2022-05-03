@@ -47,8 +47,11 @@ public class GameManager : Singleton<GameManager>
         FillEnergy(m_enemyEnergy, 0);
         FillEnergy(m_playerEnergy, 0);
         _UiInstance = UiManager.Instance ;
-  
-
+        if (PlayerPrefs.GetInt("MatchNo") == 0)
+        {
+            PlayerPrefs.SetInt("MatchNo", 1);
+        }
+        MatchNo = PlayerPrefs.GetInt("MatchNo");
 
     }
 
@@ -113,17 +116,23 @@ public class GameManager : Singleton<GameManager>
     public void StartMatch()
     {
         IsStarted = true;
-        IncreaseMatchNo();
+        
        _UiInstance.StartUI.SetActive(false);
         _UiInstance.InGmePanel.SetActive(true);
         BallGeberation();
         Attacker = Parameters.PlayerState(true);
         Defender = Parameters.PlayerState(false);
+        _UiInstance.NameUpdate();
     }
 
-    void IncreaseMatchNo()
+   public void IncreaseMatchNo()
     {
+        
+        MatchNo = PlayerPrefs.GetInt("MatchNo");
+        print(MatchNo);
         MatchNo++;
+        PlayerPrefs.SetInt("MatchNo", MatchNo);
+        print(PlayerPrefs.GetInt("MatchNo"));
     }
 
      void BallGeberation()
@@ -159,24 +168,40 @@ public class GameManager : Singleton<GameManager>
         {
             if(Attacker.isAtk)
             {
+                AttackerPoint = PlayerPrefs.GetInt("PlayerLifeTimeScore");
                 AttackerPoint += 1;
+                PlayerPrefs.SetInt("PlayerLifeTimeScore", AttackerPoint);
+                
             }
             else
             {
+                DefenderPoint = PlayerPrefs.GetInt("DefenderLifeTimeScore");
                 DefenderPoint += 1;
+                PlayerPrefs.SetInt("DefenderLifeTimeScore", DefenderPoint);
+               
             }
         }
         else
         {
             if(Attacker.isAtk)
             {
+                DefenderPoint = PlayerPrefs.GetInt("DefenderLifeTimeScore");
                 DefenderPoint += 1;
+                PlayerPrefs.SetInt("DefenderLifeTimeScore", DefenderPoint);
+                print(PlayerPrefs.GetInt("DefenderLifeTimeScore"));
             }
             else
             {
+                AttackerPoint = PlayerPrefs.GetInt("PlayerLifeTimeScore");
                 AttackerPoint += 1;
+                PlayerPrefs.SetInt("PlayerLifeTimeScore", AttackerPoint);
             }
         }
+        
+        _UiInstance.CompleteUI.gameObject.SetActive(true);
+
     }
 
+ 
+ 
 }
