@@ -11,6 +11,7 @@ TagManager:
   - Enemy
   - Fire
   - Generated
+  - Joystick
   layers:
   - Default
   - TransparentFX

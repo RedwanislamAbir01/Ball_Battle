@@ -51,7 +51,7 @@ public class Defender : MonoBehaviour, ISoldier
     {
         if (other.gameObject.CompareTag("Attacker"))
         {
-           other.GetComponent<Attacker>().IsCaught = true;
+            other.GetComponent<Attacker>().IsCaught = true;
             IsActive = false;
             StartCoroutine(Reactivate());
         }

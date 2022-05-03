@@ -46,10 +46,17 @@ public class TapSpwaner : MonoBehaviour
                 if (_GmInstance.PlayerEnergy > 2)
                 {
                     _GmInstance.PlayerEnergy -= 2;
-                    GameObject m_attacker = Instantiate(Attacker, hit.point, Quaternion.identity, _GmInstance.Parent.transform);
-                    m_attacker.GetComponent<Attacker>().Ball = _GmInstance.Ball;
-                    _GmInstance.PAttacker.Add(m_attacker.GetComponent<Attacker>());
-              
+                    if (_GmInstance.Attacker.isAtk)
+                    {
+
+                        GameObject m_attacker = Instantiate(Attacker, hit.point, Quaternion.identity, _GmInstance.Parent.transform);
+                        m_attacker.GetComponent<Attacker>().Ball = _GmInstance.Ball;
+                        _GmInstance.PAttacker.Add(m_attacker.GetComponent<Attacker>());
+                    }
+                    else
+                    {
+                        GameObject m_defender = Instantiate(Defender, hit.point, Quaternion.identity, _GmInstance.Parent.transform);
+                    }
                 }
             }
 
@@ -58,8 +65,18 @@ public class TapSpwaner : MonoBehaviour
                 if (_GmInstance.EnemyEnergy > 3)
                 {
                     _GmInstance.EnemyEnergy -= 3;
-                    GameObject m_defender = Instantiate(Defender, hit.point, Quaternion.identity, _GmInstance.Parent.transform);
-                    
+                    if (_GmInstance.Defender.isAtk)
+                    {
+                        GameObject m_attacker = Instantiate(Attacker, hit.point, Quaternion.identity, _GmInstance.Parent.transform);
+                        m_attacker.GetComponent<Attacker>().Ball = _GmInstance.Ball;
+                        _GmInstance.PAttacker.Add(m_attacker.GetComponent<Attacker>());
+                       
+                    }
+                    else
+                    {
+                        GameObject m_defender = Instantiate(Defender, hit.point, Quaternion.identity, _GmInstance.Parent.transform);
+                        _GmInstance.PDefender.Add(m_defender.GetComponent<Defender>());
+                    }
                 }
             }
         }

@@ -27,12 +27,19 @@ public class GameManager : Singleton<GameManager>
     public bool BallHolding;
 
 
+    public Player Attacker;
+    public Player Defender;
+
+
     public List<Attacker> PAttacker = new List<Attacker>();
+    public List<Defender> PDefender = new List<Defender>();
     UiManager _UiInstance;
      List<EnergyBar> m_enemyEnergy = new List<EnergyBar>();
      List<EnergyBar> m_playerEnergy = new List<EnergyBar>();
 
     public bool GameOver;
+    public int AttackerPoint;
+    public int DefenderPoint ;
     public override void Start()
     {
 
@@ -44,6 +51,7 @@ public class GameManager : Singleton<GameManager>
 
 
     }
+
    public void SetColor(bool IsEnemy ,MeshRenderer m, Color c)
     {
         if (IsEnemy)
@@ -109,6 +117,8 @@ public class GameManager : Singleton<GameManager>
        _UiInstance.StartUI.SetActive(false);
         _UiInstance.InGmePanel.SetActive(true);
         BallGeberation();
+        Attacker = Parameters.PlayerState(true);
+        Defender = Parameters.PlayerState(false);
     }
 
     void IncreaseMatchNo()
@@ -132,6 +142,41 @@ public class GameManager : Singleton<GameManager>
         g.transform.position = RndPointonPlane;
 
         g.transform.parent = Parent.transform;
+    }
+
+    public void GameEnd(bool IsAttackerWon)
+    {
+        GameOver = true;
+        foreach(Attacker atker in PAttacker)
+        {
+            atker.IsActive = false;
+        }
+        foreach (Defender dfnder in PDefender)
+        {
+           dfnder.IsActive = false;
+        }
+        if (IsAttackerWon)
+        {
+            if(Attacker.isAtk)
+            {
+                AttackerPoint += 1;
+            }
+            else
+            {
+                DefenderPoint += 1;
+            }
+        }
+        else
+        {
+            if(Attacker.isAtk)
+            {
+                DefenderPoint += 1;
+            }
+            else
+            {
+                AttackerPoint += 1;
+            }
+        }
     }
 
 }

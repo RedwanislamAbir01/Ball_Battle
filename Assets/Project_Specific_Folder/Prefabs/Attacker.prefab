@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6d6a82bd85f664980261790aaee0b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackerType: 1
+  AttackerType: 0
   Ball: {fileID: 0}
   Holder: {fileID: 5778841379869014361}
   HighLighter: {fileID: 4569796778730191915}

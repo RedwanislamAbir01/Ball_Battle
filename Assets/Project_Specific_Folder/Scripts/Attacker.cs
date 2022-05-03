@@ -33,10 +33,15 @@ public class Attacker : MonoBehaviour, ISoldier
 
     public bool IsCaught;
     public bool IsActive;
+    public float Speed;
+    public FloatingJoystick FloatStick;
     void Start()
     {
         if (AttackerType == EType.PenaltyTaker)
+        {
+            FloatStick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<FloatingJoystick>();
             return;
+        }
         _GmInstance = GameManager.Instance;
         _GmInstance.SetColor(false, transform.GetChild(0).transform.GetComponent<MeshRenderer>() , _GmInstance.PlayerColor);
         _GmInstance.BallHolding = false;
@@ -46,9 +51,23 @@ public class Attacker : MonoBehaviour, ISoldier
     // Update is called once per frame
     void Update()
     {
-        if (AttackerType == EType.Normal)            
-        Activated();
-       
+        if (AttackerType == EType.Normal)
+            Activated();
+   
+
+    }
+    private void FixedUpdate()
+    {
+        if (AttackerType != EType.Normal)
+            MovementControl();
+    }
+
+    void MovementControl()
+    {
+        float m_Xdir = FloatStick.Horizontal;
+        float m_Zdir = FloatStick.Vertical;
+
+        transform.position += new Vector3(-m_Xdir * Speed, transform.position.y, -m_Zdir * Speed);
     }
     IEnumerator Reactivate()
     {
@@ -94,7 +113,7 @@ public class Attacker : MonoBehaviour, ISoldier
                     print(closest);
                     if (closest == null)
                     {
-                        _GmInstance.GameOver = true;
+                        _GmInstance.GameEnd(false);
                         IsActive = false;                        
                         return;
                     }
@@ -117,6 +136,9 @@ public class Attacker : MonoBehaviour, ISoldier
                     Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 360, 0f);
                     transform.rotation = Quaternion.LookRotation(newDirection);
                     transform.position = Vector3.MoveTowards(transform.position, new Vector3(_GmInstance.Gate.transform.position.x, 0, _GmInstance.Gate.transform.position.z), 2 * Time.deltaTime);
+                 
+
+
                 }
 
             }
@@ -158,5 +180,14 @@ public class Attacker : MonoBehaviour, ISoldier
         }
         return m_Attacker;
     }
-
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("EGate"))
+        {
+            if(_GmInstance.Attacker.isAtk)
+            {
+                _GmInstance.GameEnd(true);
+            }
+        }
+    }
 }
