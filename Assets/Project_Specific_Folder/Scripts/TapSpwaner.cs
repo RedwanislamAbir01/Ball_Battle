@@ -45,7 +45,7 @@ public class TapSpwaner : MonoBehaviour
             {
                 if (_GmInstance.PlayerEnergy > 2)
                 {
-                    _GmInstance.PlayerEnergy -= 2;
+                    _GmInstance.PlayerEnergy -= Parameters.EnergyCostAttacker;
                     if (_GmInstance.Attacker.isAtk)
                     {
 
@@ -64,7 +64,7 @@ public class TapSpwaner : MonoBehaviour
             {
                 if (_GmInstance.EnemyEnergy > 3)
                 {
-                    _GmInstance.EnemyEnergy -= 3;
+                    _GmInstance.EnemyEnergy -= Parameters.EnergyCostDefender;
                     if (_GmInstance.Defender.isAtk)
                     {
                         GameObject m_attacker = Instantiate(Attacker, hit.point, Quaternion.identity, _GmInstance.Parent.transform);

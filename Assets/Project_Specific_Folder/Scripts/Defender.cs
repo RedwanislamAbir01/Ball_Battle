@@ -43,7 +43,7 @@ public class Defender : MonoBehaviour, ISoldier
        
         if(Target !=null && IsActive)
         {
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(Target.transform.position.x , 0 , Target.transform.position.z), 1 * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(Target.transform.position.x , 0 , Target.transform.position.z), Parameters.CarryingSpeed * Time.deltaTime);
         }
     }
 
@@ -59,12 +59,12 @@ public class Defender : MonoBehaviour, ISoldier
     public void InActivated()
     {
         if(!IsActive)
-        transform.position = Vector3.MoveTowards(transform.position, m_StartPostion, 2 * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, m_StartPostion, Parameters.ReturnSpeed * Time.deltaTime);
     }
     IEnumerator Reactivate()
     {
         m_Collider.enabled = false;
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(Parameters.ReactivateTimeDef);
         IsActive = true;
         m_Collider.enabled = true;
 

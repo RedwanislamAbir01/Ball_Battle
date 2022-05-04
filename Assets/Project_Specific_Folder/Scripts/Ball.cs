@@ -17,7 +17,7 @@ public class Ball : MonoBehaviour
     {
         if(transform.parent == null && GoTo != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, GoTo.transform.position, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, GoTo.transform.position, Parameters.SpeedBall * Time.deltaTime);
             if (transform.position == GoTo.transform.position)
             {
                 GoTo = null;

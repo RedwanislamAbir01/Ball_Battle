@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject DefenderField;
     public Attacker BallContainer;
     [Header("Game Parameters")]
-    public float TimeLimit = 140f;
+    public float TimeLimit = 0f;
     public bool BallHolding;
 
 
@@ -44,7 +44,8 @@ public class GameManager : Singleton<GameManager>
     public override void Start()
     {
 
-        base.Start(); 
+        base.Start();
+        TimeLimit = Parameters.TimeLeft;
         FillEnergy(m_enemyEnergy, 0);
         FillEnergy(m_playerEnergy, 0);
         _UiInstance = UiManager.Instance ;
@@ -69,17 +70,30 @@ public class GameManager : Singleton<GameManager>
     }
     private void Update()
     {
-        if (IsStarted)
+        if (!IsStarted)
+            return;
+        if (GameOver) return;
+
+        TimeLimit -= Time.deltaTime;
+       _UiInstance.TimerText.text = TimeLimit.ToString("0");
+        if (TimeLimit <= 0)
+        {
+            GameEnd(false, true);
+        }
+
+
+
+            if (IsStarted)
         {
             if (EnemyEnergy < 6)
             {
-                EnemyEnergy += 1 * Time.deltaTime;
+                EnemyEnergy += Parameters.EnergyRegenAttacker * Time.deltaTime;
                 FillEnergy(m_enemyEnergy, EnemyEnergy);
 
             }
             if (PlayerEnergy < 6)
             {
-                PlayerEnergy += 1 * Time.deltaTime;
+                PlayerEnergy += Parameters.EnergyRegenAttacker * Time.deltaTime;
                 FillEnergy(m_playerEnergy, PlayerEnergy);
             }
         }
@@ -154,7 +168,7 @@ public class GameManager : Singleton<GameManager>
         g.transform.parent = Parent.transform;
     }
 
-    public void GameEnd(bool IsAttackerWon)
+    public void GameEnd(bool IsAttackerWon , bool IsDraw = false)
     {
         GameOver = true;
         foreach(Attacker atker in PAttacker)
@@ -165,44 +179,65 @@ public class GameManager : Singleton<GameManager>
         {
            dfnder.IsActive = false;
         }
-        if (IsAttackerWon)
+        if (!IsDraw)
         {
-            if(Attacker.isAtk)
+            if (IsAttackerWon)
             {
-                AttackerPoint = PlayerPrefs.GetInt("PlayerLifeTimeScore");
-                AttackerPoint += 1;
-                PlayerPrefs.SetInt("PlayerLifeTimeScore", AttackerPoint);
-                
+                if (Attacker.isAtk)
+                {
+                    AttackerPoint = PlayerPrefs.GetInt("PlayerLifeTimeScore");
+                    AttackerPoint += 1;
+                    PlayerPrefs.SetInt("PlayerLifeTimeScore", AttackerPoint);
+
+                }
+                else
+                {
+                    DefenderPoint = PlayerPrefs.GetInt("DefenderLifeTimeScore");
+                    DefenderPoint += 1;
+                    PlayerPrefs.SetInt("DefenderLifeTimeScore", DefenderPoint);
+
+                }
             }
             else
             {
-                DefenderPoint = PlayerPrefs.GetInt("DefenderLifeTimeScore");
-                DefenderPoint += 1;
-                PlayerPrefs.SetInt("DefenderLifeTimeScore", DefenderPoint);
-               
+                if (Attacker.isAtk)
+                {
+                    DefenderPoint = PlayerPrefs.GetInt("DefenderLifeTimeScore");
+                    DefenderPoint += 1;
+                    PlayerPrefs.SetInt("DefenderLifeTimeScore", DefenderPoint);
+                    print(PlayerPrefs.GetInt("DefenderLifeTimeScore"));
+
+
+
+                }
+                else
+                {
+
+                    AttackerPoint = PlayerPrefs.GetInt("PlayerLifeTimeScore");
+                    AttackerPoint += 1;
+                    PlayerPrefs.SetInt("PlayerLifeTimeScore", AttackerPoint);
+                }
             }
         }
         else
         {
-            if(Attacker.isAtk)
+
+        }
+        int total = PlayerPrefs.GetInt("MatchNo");
+        if (total >= 5)
+        {
+            GameOver = true;
+            int playerPoint = PlayerPrefs.GetInt("PlayerLifeTimeScore");
+            int enemyPoint = PlayerPrefs.GetInt("DefenderLifeTimeScore");
+            if (playerPoint > enemyPoint)
             {
-                DefenderPoint = PlayerPrefs.GetInt("DefenderLifeTimeScore");
-                DefenderPoint += 1;
-                PlayerPrefs.SetInt("DefenderLifeTimeScore", DefenderPoint);
-                print(PlayerPrefs.GetInt("DefenderLifeTimeScore"));
-
-
-              
+                print("Player win");
             }
             else
             {
-
-                AttackerPoint = PlayerPrefs.GetInt("PlayerLifeTimeScore");
-                AttackerPoint += 1;
-                PlayerPrefs.SetInt("PlayerLifeTimeScore", AttackerPoint);
+                print("Player Loose");
             }
         }
-        
         _UiInstance.CompleteUI.gameObject.SetActive(true);
 
     }

@@ -71,7 +71,7 @@ public class Attacker : MonoBehaviour, ISoldier
     }
     IEnumerator Reactivate()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(Parameters.ReactivateTimeAtk);
         IsActive = true;
         if(!_GmInstance.GameOver)
         {
@@ -90,7 +90,7 @@ public class Attacker : MonoBehaviour, ISoldier
             if (_GmInstance.BallContainer == null)
             {
 
-                transform.position = Vector3.MoveTowards(transform.position, Ball.transform.position, 2 * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, Ball.transform.position, Parameters.SpeedNormalAtk * Time.deltaTime);
               
                 if (Vector3.Distance(transform.position, Ball.transform.position) <= 0.1f)
                 {
@@ -135,7 +135,7 @@ public class Attacker : MonoBehaviour, ISoldier
                     Vector3 targetDirection = _GmInstance.Gate.transform.position - transform.position;
                     Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 360, 0f);
                     transform.rotation = Quaternion.LookRotation(newDirection);
-                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(_GmInstance.Gate.transform.position.x, 0, _GmInstance.Gate.transform.position.z), 2 * Time.deltaTime);
+                    transform.position = Vector3.MoveTowards(transform.position, new Vector3(_GmInstance.Gate.transform.position.x, 0, _GmInstance.Gate.transform.position.z), Parameters.CarryingSpeed * Time.deltaTime);
                  
 
 
@@ -145,7 +145,7 @@ public class Attacker : MonoBehaviour, ISoldier
             else
             {
                 print("free");
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, _GmInstance.Gate.transform.position.y, _GmInstance.Gate.transform.position.z), 1 * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, _GmInstance.Gate.transform.position.y, _GmInstance.Gate.transform.position.z), Parameters.SpeedNormalAtk * Time.deltaTime);
                 if(transform.position.z  == _GmInstance.Gate.transform.position.z)
 
                 {

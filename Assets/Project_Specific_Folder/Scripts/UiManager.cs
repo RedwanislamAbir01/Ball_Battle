@@ -54,7 +54,7 @@ public class UiManager : Singleton<UiManager>
 
     private void GenerateEnergyBar()
     {
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < Parameters.EnergyBarCount; i++)
         {
 
             GameObject PBar = Instantiate(EnergyBarPrefab, PlayerEnergyBar.transform);
@@ -84,12 +84,7 @@ public class UiManager : Singleton<UiManager>
         }
     }
 
-    private void Update()
-    {
-        if(!_GmInstance.IsStarted) return;
-        _GmInstance.TimeLimit -= Time.deltaTime;
-        TimerText.text = _GmInstance.TimeLimit.ToString("0");
-    }
+
 
 
 }
