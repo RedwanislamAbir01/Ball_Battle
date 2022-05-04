@@ -34,7 +34,9 @@ public static class Parameters
             }
             else
             {
+                GameManager.Instance.FieldScript.SwapGates();
                 return DefenderSet();
+
             }
         }
         else

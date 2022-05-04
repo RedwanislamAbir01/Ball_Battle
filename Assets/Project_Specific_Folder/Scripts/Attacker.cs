@@ -190,7 +190,7 @@ public class Attacker : MonoBehaviour, ISoldier
             }
             else
             {
-                _GmInstance.GameEnd(false);
+                _GmInstance.GameEnd(true);
             }
         }
     }

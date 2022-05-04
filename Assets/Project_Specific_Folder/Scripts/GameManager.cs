@@ -33,6 +33,7 @@ public class GameManager : Singleton<GameManager>
 
     public List<Attacker> PAttacker = new List<Attacker>();
     public List<Defender> PDefender = new List<Defender>();
+    public Field FieldScript;
     UiManager _UiInstance;
      List<EnergyBar> m_enemyEnergy = new List<EnergyBar>();
      List<EnergyBar> m_playerEnergy = new List<EnergyBar>();
@@ -185,19 +186,20 @@ public class GameManager : Singleton<GameManager>
         {
             if(Attacker.isAtk)
             {
+                DefenderPoint = PlayerPrefs.GetInt("DefenderLifeTimeScore");
+                DefenderPoint += 1;
+                PlayerPrefs.SetInt("DefenderLifeTimeScore", DefenderPoint);
+                print(PlayerPrefs.GetInt("DefenderLifeTimeScore"));
 
-                AttackerPoint = PlayerPrefs.GetInt("PlayerLifeTimeScore");
-                AttackerPoint += 1;
-                PlayerPrefs.SetInt("PlayerLifeTimeScore", AttackerPoint);
 
               
             }
             else
             {
-                DefenderPoint = PlayerPrefs.GetInt("DefenderLifeTimeScore");
-                DefenderPoint += 1;
-                PlayerPrefs.SetInt("DefenderLifeTimeScore", DefenderPoint);
-                print(PlayerPrefs.GetInt("DefenderLifeTimeScore"));
+
+                AttackerPoint = PlayerPrefs.GetInt("PlayerLifeTimeScore");
+                AttackerPoint += 1;
+                PlayerPrefs.SetInt("PlayerLifeTimeScore", AttackerPoint);
             }
         }
         
