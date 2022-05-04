@@ -188,6 +188,10 @@ public class Attacker : MonoBehaviour, ISoldier
             {
                 _GmInstance.GameEnd(true);
             }
+            else
+            {
+                _GmInstance.GameEnd(false);
+            }
         }
     }
 }

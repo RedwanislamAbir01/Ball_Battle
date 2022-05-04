@@ -185,16 +185,19 @@ public class GameManager : Singleton<GameManager>
         {
             if(Attacker.isAtk)
             {
+
+                AttackerPoint = PlayerPrefs.GetInt("PlayerLifeTimeScore");
+                AttackerPoint += 1;
+                PlayerPrefs.SetInt("PlayerLifeTimeScore", AttackerPoint);
+
+              
+            }
+            else
+            {
                 DefenderPoint = PlayerPrefs.GetInt("DefenderLifeTimeScore");
                 DefenderPoint += 1;
                 PlayerPrefs.SetInt("DefenderLifeTimeScore", DefenderPoint);
                 print(PlayerPrefs.GetInt("DefenderLifeTimeScore"));
-            }
-            else
-            {
-                AttackerPoint = PlayerPrefs.GetInt("PlayerLifeTimeScore");
-                AttackerPoint += 1;
-                PlayerPrefs.SetInt("PlayerLifeTimeScore", AttackerPoint);
             }
         }
         
