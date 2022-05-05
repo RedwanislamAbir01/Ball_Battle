@@ -196,13 +196,30 @@ public class Attacker : MonoBehaviour, ISoldier
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("EGate"))
+     
+        if (AttackerType == EType.PenaltyTaker)
         {
-            if(_GmInstance.Attacker.isAtk && HasBall )
+            if (other.gameObject.CompareTag("Ball"))
             {
-                _GmInstance.GameEnd(true);
+                other.transform.position = Holder.transform.position;
+                other.transform.parent = this.transform;
+                HasBall = true;
             }
-        
+            if (other.gameObject.CompareTag("EGate"))
+            {
+                PenaltyManager.Instance.isPlayerWin = true;
+            }
+        }
+        else
+        {
+            if (other.gameObject.CompareTag("EGate"))
+            {
+                if (_GmInstance.Attacker.isAtk && HasBall)
+                {
+                    _GmInstance.GameEnd(true);
+                }
+
+            }
         }
     }
 }
