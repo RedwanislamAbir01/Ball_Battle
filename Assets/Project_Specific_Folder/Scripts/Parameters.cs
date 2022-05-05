@@ -65,10 +65,12 @@ public static class Parameters
         {
             if (GameManager.Instance.MatchNo % 2 == 1)
             {
+               
                 return DefenderSet();
             }
             else
             {
+                GameManager.Instance.FieldScript.SwapGates();
                 return AttackerSet();
             }
         }

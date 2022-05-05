@@ -166,6 +166,9 @@ MonoBehaviour:
   HighLighter: {fileID: 4569796778730191915}
   IsCaught: 0
   IsActive: 0
+  Speed: 0
+  FloatStick: {fileID: 0}
+  HasBall: 0
 --- !u!136 &8218021118702711116
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -174,7 +177,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3594723633847192564}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.27198136
   m_Height: 1.0383958
@@ -208,8 +211,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c264e0f91a205a4fa0fd3f7ff69df6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 0.05
-  f: {fileID: 0}
 --- !u!1 &4569796778730191915
 GameObject:
   m_ObjectHideFlags: 0

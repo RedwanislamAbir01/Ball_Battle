@@ -41,7 +41,7 @@ public class Defender : MonoBehaviour, ISoldier
     public void Activated()
     {
        
-        if(Target !=null && IsActive)
+        if(Target !=null && IsActive && Target.GetComponent<Attacker>().HasBall)
         {
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(Target.transform.position.x , 0 , Target.transform.position.z), Parameters.CarryingSpeed * Time.deltaTime);
         }

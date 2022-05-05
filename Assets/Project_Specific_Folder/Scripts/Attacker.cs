@@ -35,6 +35,7 @@ public class Attacker : MonoBehaviour, ISoldier
     public bool IsActive;
     public float Speed;
     public FloatingJoystick FloatStick;
+    public bool HasBall;
     void Start()
     {
         if (AttackerType == EType.PenaltyTaker)
@@ -104,8 +105,8 @@ public class Attacker : MonoBehaviour, ISoldier
             else if ((_GmInstance.BallContainer == GetComponent<Attacker>()))  // Running with ball 
 
             {
-               
 
+                HasBall = true;
                 if (IsCaught)
                 {
                     HighLighter.SetActive(false);
@@ -113,6 +114,7 @@ public class Attacker : MonoBehaviour, ISoldier
                     print(closest);
                     if (closest == null)
                     {
+                        
                         _GmInstance.GameEnd(false);
                         IsActive = false;                        
                         return;
@@ -144,12 +146,14 @@ public class Attacker : MonoBehaviour, ISoldier
             }
             else
             {
-                print("free");
+                HasBall = false;
+               
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, _GmInstance.Gate.transform.position.y, _GmInstance.Gate.transform.position.z), Parameters.SpeedNormalAtk * Time.deltaTime);
                 if(transform.position.z  == _GmInstance.Gate.transform.position.z)
 
                 {
-                    Destroy(gameObject, 1.2f);
+                    _GmInstance.PAttacker.Remove(this);
+                    Destroy(gameObject, 1f);
                 }
             
             }
@@ -184,14 +188,11 @@ public class Attacker : MonoBehaviour, ISoldier
     {
         if(other.gameObject.CompareTag("EGate"))
         {
-            if(_GmInstance.Attacker.isAtk)
+            if(_GmInstance.Attacker.isAtk && HasBall )
             {
                 _GmInstance.GameEnd(true);
             }
-            else
-            {
-                _GmInstance.GameEnd(true);
-            }
+        
         }
     }
 }

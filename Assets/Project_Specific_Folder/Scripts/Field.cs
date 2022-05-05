@@ -23,8 +23,10 @@ public class Field : MonoBehaviour
 
     public void SwapGates()
     {
+       
         EnemyGate.transform.position = m_PGateStartPos;
-        PlayerGate.transform.position = m_EGateStartPos;
+        PlayerGate.transform.position = m_EGateStartPos; 
+        GameManager.Instance.Gate = EnemyGate;
     }
 
 }
