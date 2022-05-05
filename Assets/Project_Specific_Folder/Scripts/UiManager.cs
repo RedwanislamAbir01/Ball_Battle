@@ -25,6 +25,7 @@ public class UiManager : Singleton<UiManager>
     public TextMeshProUGUI EnemyText;
     public TextMeshProUGUI EnemyPoint;
     public TextMeshProUGUI PlayerPoint;
+    public TextMeshProUGUI NotEnoughTxt;
     [Header("Btns")]
     public Button StartGameBtn;
     public Button NextButton;
@@ -88,6 +89,10 @@ public class UiManager : Singleton<UiManager>
     }
 
 
-
+    public IEnumerator NotEnoughRoutine()
+    {
+        NotEnoughTxt.gameObject.SetActive(true);
+        yield return new WaitForSeconds(.5f); NotEnoughTxt.gameObject.SetActive(false);
+    }
 
 }

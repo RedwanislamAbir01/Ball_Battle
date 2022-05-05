@@ -6,11 +6,12 @@ public class TapSpwaner : MonoBehaviour
 {
     public GameObject Attacker, Defender;
 
-
+    UiManager _UiManager;
     GameManager _GmInstance;
     void Start()
     {
         _GmInstance = GameManager.Instance;
+        _UiManager = UiManager.Instance;
     }
 
     // Update is called once per frame
@@ -58,6 +59,10 @@ public class TapSpwaner : MonoBehaviour
                         GameObject m_defender = Instantiate(Defender, hit.point, Quaternion.identity, _GmInstance.Parent.transform);
                     }
                 }
+                else
+                {
+                    StartCoroutine(_UiManager.NotEnoughRoutine());
+                }
             }
 
             else if (hit.transform.tag == "DefenderrLand")
@@ -77,6 +82,10 @@ public class TapSpwaner : MonoBehaviour
                         GameObject m_defender = Instantiate(Defender, hit.point, Quaternion.identity, _GmInstance.Parent.transform);
                         _GmInstance.PDefender.Add(m_defender.GetComponent<Defender>());
                     }
+                }
+                else
+                {
+                    StartCoroutine(_UiManager.NotEnoughRoutine());
                 }
             }
         }
