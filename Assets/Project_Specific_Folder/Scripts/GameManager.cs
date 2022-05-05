@@ -232,16 +232,30 @@ public class GameManager : Singleton<GameManager>
             if (playerPoint > enemyPoint)
             {
                 print("Player win");
+                _UiInstance.WinUI.SetActive(true);
             }
             else
             {
+                _UiInstance.LooseUI.SetActive(true);
                 print("Player Loose");
             }
+            if (playerPoint == 2 && enemyPoint == 2)
+            {
+                SceneManager.LoadScene(01);
+            }
         }
+
+        if(total < 5)
         _UiInstance.CompleteUI.gameObject.SetActive(true);
 
     }
 
- 
- 
+    public void Reset()
+    {
+        PlayerPrefs.SetInt("MatchNo", 0);
+        PlayerPrefs.SetInt("PlayerLifeTimeScore" , 0);
+        PlayerPrefs.GetInt("DefenderLifeTimeScore", 0);
+        SceneManager.LoadScene(0);
+    }
+
 }

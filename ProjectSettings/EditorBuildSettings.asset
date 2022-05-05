@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Penalty Sceen.unity
+    guid: 6fd564a8dd64c0b4db084ee469427d69
   m_configObjects: {}

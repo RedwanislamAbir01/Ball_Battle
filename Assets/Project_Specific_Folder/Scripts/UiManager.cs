@@ -11,6 +11,9 @@ public class UiManager : Singleton<UiManager>
     public GameObject StartUI;
     public GameObject EndUi;
     public GameObject CompleteUI;
+    public GameObject WinUI;
+    public GameObject LooseUI;
+
     public GameObject InGmePanel;
     public GameObject EnemyEnergBar;
     public GameObject PlayerEnergyBar;

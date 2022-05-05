@@ -11,7 +11,7 @@ public class Player
 public static class Parameters 
 {
     public static int MatchPerGame = 5;
-    public static float TimeLeft = 140f;
+    public static float TimeLeft = 14f;
     public static int EnergyBarCount = 6;
 
     public static float EnergyRegenAttacker = .5f;

@@ -5401,7 +5401,7 @@ GameObject:
   - component: {fileID: 482363167}
   - component: {fileID: 482363169}
   m_Layer: 5
-  m_Name: Level Completed
+  m_Name: Win
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

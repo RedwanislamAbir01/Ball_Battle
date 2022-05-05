@@ -216,6 +216,12 @@ public class Attacker : MonoBehaviour, ISoldier
             {
                 if (_GmInstance.Attacker.isAtk && HasBall)
                 {
+                    other.gameObject.GetComponent<Collider>().enabled = false;
+                    _GmInstance.GameEnd(true);
+                }
+                else
+                {
+                    if(HasBall)
                     _GmInstance.GameEnd(true);
                 }
 
