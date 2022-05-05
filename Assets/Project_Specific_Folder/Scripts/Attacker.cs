@@ -13,7 +13,8 @@ public class Attacker : MonoBehaviour, ISoldier
     public GameObject Ball;
     public Transform Holder;
     public GameObject HighLighter;
-
+    public GameObject Indicator;
+    public GameObject GreyScaleObj;
 
     public int SpwanEnergyPoint
     {
@@ -72,9 +73,12 @@ public class Attacker : MonoBehaviour, ISoldier
     }
     IEnumerator Reactivate()
     {
+        Indicator.gameObject.SetActive(false);
+        GreyScaleObj.SetActive(true);
         yield return new WaitForSeconds(Parameters.ReactivateTimeAtk);
         IsActive = true;
-        if(!_GmInstance.GameOver)
+        GreyScaleObj.SetActive(false);
+        if (!_GmInstance.GameOver)
         {
             IsCaught = false;
 
@@ -90,12 +94,12 @@ public class Attacker : MonoBehaviour, ISoldier
         {
             if (_GmInstance.BallContainer == null)
             {
-
+                LookAtTarget(Ball);
                 transform.position = Vector3.MoveTowards(transform.position, Ball.transform.position, Parameters.SpeedNormalAtk * Time.deltaTime);
               
                 if (Vector3.Distance(transform.position, Ball.transform.position) <= 0.1f)
                 {
-
+                
                     _GmInstance.BallContainer = GetComponent<Attacker>();
                     Ball.transform.position = Holder.transform.position;
                     Ball.transform.parent = this.transform;
@@ -134,9 +138,8 @@ public class Attacker : MonoBehaviour, ISoldier
                 }
                 else
                 {
-                    Vector3 targetDirection = _GmInstance.Gate.transform.position - transform.position;
-                    Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 360, 0f);
-                    transform.rotation = Quaternion.LookRotation(newDirection);
+                    LookAtTarget(_GmInstance.Gate);
+                    
                     transform.position = Vector3.MoveTowards(transform.position, new Vector3(_GmInstance.Gate.transform.position.x, 0, _GmInstance.Gate.transform.position.z), Parameters.CarryingSpeed * Time.deltaTime);
                  
 
@@ -149,6 +152,7 @@ public class Attacker : MonoBehaviour, ISoldier
                 HasBall = false;
                
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, _GmInstance.Gate.transform.position.y, _GmInstance.Gate.transform.position.z), Parameters.SpeedNormalAtk * Time.deltaTime);
+                LookAtTarget(_GmInstance.Gate);
                 if(transform.position.z  == _GmInstance.Gate.transform.position.z)
 
                 {
@@ -158,6 +162,12 @@ public class Attacker : MonoBehaviour, ISoldier
             
             }
         }
+    }
+    void LookAtTarget(GameObject g)
+    {
+        Vector3 targetDirection = g.transform.position - transform.position;
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 360, 0f);
+        transform.rotation = Quaternion.LookRotation(newDirection);
     }
  public void InActivated()
     {
