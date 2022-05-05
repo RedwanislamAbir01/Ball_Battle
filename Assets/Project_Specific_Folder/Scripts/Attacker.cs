@@ -69,8 +69,11 @@ public class Attacker : MonoBehaviour, ISoldier
     {
         float m_Xdir = FloatStick.Horizontal;
         float m_Zdir = FloatStick.Vertical;
-
+        Anim.Play("Run");
         transform.position += new Vector3(-m_Xdir * Speed, transform.position.y, -m_Zdir * Speed);
+        Vector3 lookDirection = new Vector3(m_Xdir, 0, m_Zdir);
+        transform.rotation = Quaternion.LookRotation(lookDirection);
+
     }
     IEnumerator Reactivate()
     {
