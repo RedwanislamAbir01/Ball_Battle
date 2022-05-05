@@ -24339,8 +24339,8 @@ MonoBehaviour:
   StartUI: {fileID: 1473265678204927958}
   EndUi: {fileID: 5129942751915642798}
   CompleteUI: {fileID: 7530967020445585520}
-  WinUI: {fileID: 0}
-  LooseUI: {fileID: 0}
+  WinUI: {fileID: 1737986650}
+  LooseUI: {fileID: 23851250}
   InGmePanel: {fileID: 1333586749}
   EnemyEnergBar: {fileID: 1410417208713688680}
   PlayerEnergyBar: {fileID: 1410417209280432611}
