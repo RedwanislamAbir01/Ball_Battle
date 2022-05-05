@@ -10,6 +10,7 @@ public class Attacker : MonoBehaviour, ISoldier
         PenaltyTaker
     }
     public EType AttackerType;
+    public Animator Anim;
     public GameObject Ball;
     public Transform Holder;
     public GameObject HighLighter;
@@ -77,6 +78,7 @@ public class Attacker : MonoBehaviour, ISoldier
         GreyScaleObj.SetActive(true);
         yield return new WaitForSeconds(Parameters.ReactivateTimeAtk);
         IsActive = true;
+        Anim.Play("Run");
         GreyScaleObj.SetActive(false);
         if (!_GmInstance.GameOver)
         {
@@ -94,6 +96,7 @@ public class Attacker : MonoBehaviour, ISoldier
         {
             if (_GmInstance.BallContainer == null)
             {
+                Anim.Play("Run");
                 LookAtTarget(Ball);
                 transform.position = Vector3.MoveTowards(transform.position, Ball.transform.position, Parameters.SpeedNormalAtk * Time.deltaTime);
               
@@ -113,6 +116,7 @@ public class Attacker : MonoBehaviour, ISoldier
                 HasBall = true;
                 if (IsCaught)
                 {
+                    Anim.Play("Idle");
                     HighLighter.SetActive(false);
                     Attacker closest = GetNearestAttacker();
                     print(closest);
@@ -150,7 +154,7 @@ public class Attacker : MonoBehaviour, ISoldier
             else
             {
                 HasBall = false;
-               
+                Anim.Play("Run");
                 transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, _GmInstance.Gate.transform.position.y, _GmInstance.Gate.transform.position.z), Parameters.SpeedNormalAtk * Time.deltaTime);
                 LookAtTarget(_GmInstance.Gate);
                 if(transform.position.z  == _GmInstance.Gate.transform.position.z)

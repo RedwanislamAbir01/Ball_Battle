@@ -6,6 +6,7 @@ public class Defender : MonoBehaviour, ISoldier
 {
 
     public GameObject Target;
+    public Animator Anim;
     int i;
     public bool IsActive;
     public GameObject DetectionCircle;
@@ -28,6 +29,7 @@ public class Defender : MonoBehaviour, ISoldier
     GameManager _GmInstance;
     void Start()
     {
+        Anim.Play("Idle");
         m_Collider = GetComponent<Collider>();
         IsActive = true;
         m_StartPostion = transform.position;
@@ -44,6 +46,7 @@ public class Defender : MonoBehaviour, ISoldier
        
         if(Target !=null && IsActive && Target.GetComponent<Attacker>().HasBall)
         {
+            Anim.Play("Run");
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(Target.transform.position.x , 0 , Target.transform.position.z), Parameters.CarryingSpeed * Time.deltaTime);
         }
     }
@@ -60,8 +63,11 @@ public class Defender : MonoBehaviour, ISoldier
     }
     public void InActivated()
     {
-        if(!IsActive)
-        transform.position = Vector3.MoveTowards(transform.position, m_StartPostion, Parameters.ReturnSpeed * Time.deltaTime);
+        if (!IsActive)
+        {
+            Anim.Play("Idle");
+            transform.position = Vector3.MoveTowards(transform.position, m_StartPostion, Parameters.ReturnSpeed * Time.deltaTime);
+        }
     }
     IEnumerator Reactivate()
     {
