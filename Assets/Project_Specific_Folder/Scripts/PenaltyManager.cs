@@ -45,6 +45,9 @@ public class PenaltyManager : Singleton<PenaltyManager>
 
     public void Reset()
     {
+        PlayerPrefs.SetInt("MatchNo", 0);
+        PlayerPrefs.SetInt("PlayerLifeTimeScore", 0);
+        PlayerPrefs.GetInt("DefenderLifeTimeScore", 0);
         SceneManager.LoadScene(0);
     }
 }
