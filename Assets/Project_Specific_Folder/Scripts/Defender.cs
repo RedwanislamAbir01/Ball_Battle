@@ -8,7 +8,8 @@ public class Defender : MonoBehaviour, ISoldier
     public GameObject Target;
     int i;
     public bool IsActive;
-
+    public GameObject DetectionCircle;
+    public GameObject GreyScale;
     Vector3 m_StartPostion;
     Collider m_Collider;
     public int SpwanEnergyPoint
@@ -53,6 +54,7 @@ public class Defender : MonoBehaviour, ISoldier
         {
             other.GetComponent<Attacker>().IsCaught = true;
             IsActive = false;
+            GreyScale.gameObject.SetActive(true);
             StartCoroutine(Reactivate());
         }
     }
@@ -63,10 +65,12 @@ public class Defender : MonoBehaviour, ISoldier
     }
     IEnumerator Reactivate()
     {
+        DetectionCircle.gameObject.SetActive(false);
         m_Collider.enabled = false;
         yield return new WaitForSeconds(Parameters.ReactivateTimeDef);
         IsActive = true;
+        GreyScale.gameObject.SetActive(false);
         m_Collider.enabled = true;
-
+        DetectionCircle.gameObject.SetActive(true);
     }
 }
